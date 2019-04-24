@@ -86,9 +86,9 @@ static long sumspec(aSubRecord *precord)
 
 static long range(aSubRecord *precord)
 {
-        double *output=precord->vala;   // Pointer to output A
-        double *A=precord->a;
-        double *B=precord->b;
+  double *output=precord->vala;   // Pointer to output A
+  double *A=precord->a;
+  double *B=precord->b;
 
 	double diff, N, MAX=2000;
 	int i, sign;
@@ -170,6 +170,20 @@ static long sumroi(aSubRecord *precord)
         return 0;
 }
 
+static long execmd(aSubRecord *precord)
+{
+  char *instr=precord->a;
+	char shellcmd[41]=":\0";
+
+	shellcmd[40]='\0';
+
+	strcpy(shellcmd, instr);
+
+	printf("Shell cmd:\n%s", shellcmd);
+	printf("OK\n");
+
+	return 0;
+}
 
 /* Register these symbols for use by IOC code: */
 //epicsExportAddress(int, <VAR>);
@@ -179,3 +193,4 @@ epicsRegisterFunction(sumspec);
 epicsRegisterFunction(range);
 epicsRegisterFunction(threshold);
 epicsRegisterFunction(sumroi);
+epicsRegisterFunction(execmd);

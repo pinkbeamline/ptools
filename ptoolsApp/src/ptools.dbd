@@ -10,4 +10,4 @@ function(sumspec)
 function(range)
 function(threshold)
 function(sumroi)
-
+function(execmd)
