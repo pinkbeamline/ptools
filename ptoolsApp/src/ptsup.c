@@ -174,13 +174,16 @@ static long execmd(aSubRecord *precord)
 {
   char *instr=precord->a;
 	char shellcmd[41]=":\0";
+	//int stat;
 
 	shellcmd[40]='\0';
 
 	strcpy(shellcmd, instr);
-
-	printf("Shell cmd:\n%s", shellcmd);
-	printf("OK\n");
+	//printf("Shell cmd:\n%s\n", shellcmd);
+	//stat=system(shellcmd);
+	system(shellcmd);
+	//printf("stat: %d\n", stat);
+	//printf("OK\n");
 
 	return 0;
 }
