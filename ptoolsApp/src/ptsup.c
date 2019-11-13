@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include <dbDefs.h>
 #include <registryFunction.h>
@@ -52,6 +53,68 @@ static long calcspec(aSubRecord *precord)
 	}
 
 	return 0;
+}
+
+static long profilex(aSubRecord *precord)
+{
+        double *image=precord->a;
+	double *width=precord->b;
+        double *height=precord->c;
+        double *spec=precord->vala;
+	int index,i,j;
+
+
+	if( (*width * *height) > 0.0 ){
+
+		precord->neva=*width;
+
+		for(i=0;i<*width;i++){
+			spec[i]=0.0;
+		}
+
+		for(j=0;j<*height;j++){
+			for(i=0;i<*width;i++){
+				index=(j * *width)+i;
+				spec[i]+=image[index];
+			}
+		}
+
+                return 0;
+        }else{
+
+        	return 1;
+	}
+}
+
+static long uintprofilex(aSubRecord *precord)
+{
+        uint32_t *image=precord->a;
+        double *width=precord->b;
+        double *height=precord->c;
+        double *spec=precord->vala;
+        int index,i,j;
+
+
+        if( (*width * *height) > 0.0 ){
+
+                precord->neva=*width;
+
+                for(i=0;i<*width;i++){
+                        spec[i]=0.0;
+                }
+
+                for(j=0;j<*height;j++){
+                        for(i=0;i<*width;i++){
+                                index=(j * *width)+i;
+                                spec[i]+=(double)image[index];
+                        }
+                }
+
+                return 0;
+        }else{
+
+                return 1;
+        }
 }
 
 static long sumspec(aSubRecord *precord)
@@ -197,3 +260,6 @@ epicsRegisterFunction(range);
 epicsRegisterFunction(threshold);
 epicsRegisterFunction(sumroi);
 epicsRegisterFunction(execmd);
+epicsRegisterFunction(profilex);
+epicsRegisterFunction(uintprofilex);
+
