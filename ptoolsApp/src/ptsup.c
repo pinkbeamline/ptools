@@ -202,12 +202,12 @@ static long sumroi(aSubRecord *precord)
         double *roiarray=precord->a;
         double *reset=precord->b;
         double *size=precord->c;
-	double *width=precord->d;
-	double *heigth=precord->e;
+				double *width=precord->d;
+				double *heigth=precord->e;
         double *output=precord->vala;
         double *outB=precord->valb;
-	double *outX=precord->valc;
-	double *outY=precord->vald;
+				double *outX=precord->valc;
+				double *outY=precord->vald;
 
        if((*size>0) && (*size<=262144)){
                 if(*reset==0){
@@ -251,6 +251,31 @@ static long execmd(aSubRecord *precord)
 	return 0;
 }
 
+static long reversearray(aSubRecord *precord)
+{
+	double *srcarray=precord->a;
+	double *nelm=precord->b;
+	double *disable=precord->c;
+	double *output=precord->vala;
+
+	int nelements = (int)*nelm;
+
+	if(nelements > 0){
+		if(*disable){
+			for(int i=0;i<nelements;i++){
+				output[i]=srcarray[i];
+			}
+		}else{
+			for(int i=0;i<nelements;i++){
+				output[i]=srcarray[nelements-1-i];
+			}
+		}
+	}
+
+	return 0;
+}
+
+
 /* Register these symbols for use by IOC code: */
 //epicsExportAddress(int, <VAR>);
 epicsRegisterFunction(linspace);
@@ -262,4 +287,4 @@ epicsRegisterFunction(sumroi);
 epicsRegisterFunction(execmd);
 epicsRegisterFunction(profilex);
 epicsRegisterFunction(uintprofilex);
-
+epicsRegisterFunction(reversearray);
