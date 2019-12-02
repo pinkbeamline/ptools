@@ -125,7 +125,7 @@ static long sumspec(aSubRecord *precord)
 	double *output=precord->vala;
 	double *outB=precord->valb;
 
-       if((*size>0) && (*size<=1100)){
+       if(*size>0){
 		if(*reset==0){
 			for(int i=0;i<*size;i++){
 				output[i]=0.0;
